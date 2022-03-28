@@ -1,5 +1,24 @@
-import { loginReducer } from "./Login/loginReducer";
-import { combineReducers, createStore } from "redux";
+import { createStore } from 'redux';
 
-export const store = createStore(); // add your reducers here
+const initData = {
+login:false,
+loginData:{}
+};
 
+const reducer = (state = initData, action) => {
+
+if(action.type==='LOGIN'){
+
+return{
+login:true,
+loginData:action.payload.loginDatastore
+
+}
+}
+console.log(state, "state from store")
+  return state;
+};
+
+const store = createStore(reducer);
+
+export default store;

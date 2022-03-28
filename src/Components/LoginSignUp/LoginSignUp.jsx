@@ -1,42 +1,87 @@
-import { useState } from "react";
+import {useState} from 'react'
+import axios from 'axios'
+import {useSelector, useDispatch} from 'react-redux'
+
+// const login = useSelector(state=>state.login)
+
 
 
 export const LoginSignUp = () => {
+ 
 
-  const [signIn, setSignIn] = useState({
-    name: "",
-    password: "",
-    location: "",
-    interests: [],
-    image: "",
-    subscribed: [],
-  });
+const [SignUpData,setSignUp] = useState({});
+const [loginData,setlogin] = useState({});
 
-  const handleSignup = ({ name, value }) => {
-    setSignIn({ ...signIn, [name]: value });
-  };
+  const onchangeHandler = (e) => {
+      const {id,value} = e.target
+      setSignUp({  ...SignUpData, [id]:value  })
+      console.log(SignUpData)
+  }
+  const onSubmitSignUp = () => {
+  
+    // {name,password,location,image,tech,movie,culture,art,drama} =  SignUpData
+    
+
+    function postData(url){
+    axios.post(url,SignUpData).then(console.log('posted'))
+    }
+    postData('http://localhost:8080/users')
+
+  }
+
+
+  const onchangeHandlerLogin = (e) => {
+    const {id,value} = e.target
+    setlogin({  ...loginData, [id]:value  })
+    console.log(loginData)
+}
+
+const dispatch = useDispatch();
+// const loginDatastore = useSelector(({loginData})=> login);
+  const onSubmitLogin = (e) => {
+    e.preventDefault();
+    function fetchData(url) { 
+    axios.get(url).then(res=>{
+      // setlogin(res.data)
+      if(res.data.length!==0){
+        dispatch({type:'LOGIN',payload:{login:true,loginDatastore:res.data}});
+      }
+    
+    })
+    }
+    fetchData(`http://localhost:8080/users?name=${loginData.name}&password=${loginData.password}`)
+  }
+
 
   return (
-    <div className="loginSignUp">
-      <form className="signUp" onSubmit={(e) => { }}>
+    <div className="flex justify-between loginSignUp">
+      <form className="signUp" onSubmit={onSubmitSignUp}>
         <h1>SignUp</h1>
         <label>name</label>
         <input
           type="text"
-          className="name"
-          onChange={(event) => {handleSignup(event.target) }}
+      
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize name"
+          onChange={onchangeHandler}
+          id="name"
           required
         />
         <br />
         <label>password</label>
         <input
           type="text"
-          className="password"
-          onChange={(event) => { handleSignup(event.target)}}
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize password"
+          onChange={onchangeHandler}
+          id="password"
           required
         />
         <br />
-        <select value={signIn.location} className="location" name="location" onChange={(event) => {handleSignup(event.target)}}>
+        <select
+          // value={""}
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize location"
+          onChange={onchangeHandler}
+          id="location"
+        >
           <option value=""></option>
           <option value="bangalore">Bangalore</option>
           <option value="kolkata">Kolkata</option>
@@ -48,55 +93,99 @@ export const LoginSignUp = () => {
         <label>technology</label>
         <input
           type="checkbox"
-          className="technology"
-          onChange={(event) => { }}
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize technology"
+          onChange={onchangeHandler}
+          value="true"
+          id="tech"
         />
         <br />
         <label>food</label>
-        <input type="checkbox" className="food" onChange={(event) => { }} />
+        <input
+          type="checkbox"
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize food"
+          onChange={onchangeHandler}
+          value="true"
+          id="food"
+        />
         <br />
         <label>movies</label>
-        <input type="checkbox" className="movies" onChange={(event) => { }} />
+        <input
+          type="checkbox"
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize movies"
+          onChange={onchangeHandler}
+          id="movie"
+          value="true"
+        />
         <br />
         <label>culture</label>
-        <input type="checkbox" className="culture" onChange={(event) => { }} />
+        <input
+          type="checkbox"
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize culture"
+          onChange={onchangeHandler}
+          id="culture"
+          value="true"
+        />
         <br />
         <label>art</label>
-        <input type="checkbox" className="art" onChange={(event) => { }} />
+        <input
+          type="checkbox"
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize art"
+          onChange={onchangeHandler}
+          id="true"
+          value="art"
+        />
         <br />
         <label>drama</label>
-        <input type="checkbox" className="drama" onChange={(event) => { }} />
+        <input
+          type="checkbox"
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize drama"
+          onChange={onchangeHandler}
+          id="drama"
+          value="true"
+        />
         <br />
         <label>image</label>
         <input
           type="text"
-          className="image"
-          onChange={(event) => {handleSignup(event.target) }}
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize image"
+          onChange={onchangeHandler}
+          id="image"
           required
         />
         <br />
-        <input type="submit" className="submitSignUpForm" />
+        <input
+          type="submit"
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize submitSignUpForm"
+        />
       </form>
-      
-      <form className="login" onSubmit={(e) => { }}>
-        <h1>Login</h1>
+      <form
+        className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize login"
+        onSubmit={onSubmitLogin}
+      >
+        <h1 className="text-4xl" >Login</h1>
         <label>name</label>
         <input
           type="text"
-          className="name"
-          onChange={(event) => { }}
+          id="name"
+          className=" px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 capitalize name"
+          onChange={onchangeHandlerLogin}
           required
         />
         <br />
         <label>password</label>
         <input
+        id="password"
           type="text"
-          className="password"
-          onChange={(event) => { }}
+          className="px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700 password"
+          onChange={onchangeHandlerLogin}
           required
         />
+        {/* <input value={} onChange={onChange} className='px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-400'  /> */}
         <br />
-        <input type="submit" className="submitLoginForm" />
+        <input
+          type="submit"
+          className="px-1 m-1 rounded border-[0.5px] border-gray-400 focus:border-1 focus: border-gray-700  submitLoginForm"
+        />
       </form>
     </div>
   );

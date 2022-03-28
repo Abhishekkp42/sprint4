@@ -1,19 +1,15 @@
 {
-  "posts": [
+  "users": [],
+  "meetups": [
     {
-      "id": 1,
-      "title": "json-server",
-      "author": "typicode"
+      "title": "sdfgsfd",
+      "location": "kolkata",
+      "data": "df",
+      "time": "dsfg",
+      "theme": "movies",
+      "description": "sdfasdfsadfsdfsdf",
+      "image": "sdfasdfsadfsdfsd",
+      "id": 1
     }
-  ],
-  "comments": [
-    {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
-    }
-  ],
-  "profile": {
-    "name": "typicode"
-  }
+  ]
 }
